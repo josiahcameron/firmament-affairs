@@ -1,0 +1,27 @@
+@import url('./styles/_registration.css');
+@import url("./styles/_variables.css");
+@import url("./styles/_homepage.css");
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+
+}
+
+body {
+  background: #f4f4f4;
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-size: 15px;
+  line-height: 1.55; 
+  margin: 0;
+}
+
+.container {
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
