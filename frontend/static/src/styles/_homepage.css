@@ -16,3 +16,13 @@ header{
     padding: 20px 12px;
     text-transform: capitalize;
 }
+
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.single-post{
+min-width: 18rem;
+}

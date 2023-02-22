@@ -10,9 +10,12 @@ User = get_user_model()
 
 
 # Create your views here.
-class ArticleCreateAPIView(generics.CreateAPIView):
-    queryset = models.Article.objects.all()
+class ArticleAPIView(generics.ListAPIView):
     serializer_class = ArticleSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def get_queryset(self):
+        queryset = models.Article.objects.all()
+        category = self.request.query_params.get('category')
+        if category is not None:
+            queryset = queryset.filter(article__category=category)
+        return queryset

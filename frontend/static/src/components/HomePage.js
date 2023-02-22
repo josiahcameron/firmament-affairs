@@ -1,27 +1,60 @@
-import { useState } from "react";
-import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-
-const INITIAL_ARTICLES = [
-	{
-		title: "",
-		author: "",
-		text: "",
-		image: "",
-		category: "",
-		new: false,
-	},
-];
+import ListGroup from "react-bootstrap/ListGroup";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function HomePage() {
-	const [article, setArticle] = useState({
-		title: "",
-		text: "",
-		image: null,
-	});
+	const [articles, setArticles] = useState(null);
+	const [filter, setFilter] = useState("");
+
+	useEffect(() => {
+		const getArticles = async () => {
+			const response = await fetch(`/api_v1/articles?category=${filter}`);
+
+			if (!response.ok) {
+				throw new Error("Network response was not OK");
+			}
+
+			const data = await response.json();
+
+			setArticles(data);
+		};
+
+		getArticles();
+	}, [filter]);
+
+	if (!articles) {
+		return <div>Fetching Articles...</div>;
+	}
+
+	const articlesHTML = articles
+		// .filter((article) =>
+		// 	filter ? article.category.toLowerCase() === filter : article
+		// )
+		// .
+		.map((article) => (
+			<Col className="container">
+				<div key={article.id} className="post-container">
+					<Card className="bg-dark text-white single-post">
+						<Card.Img src={article.image} alt="post-image" />
+						<Card.ImgOverlay>
+							<a className="article-category">
+								{article.category}
+							</a>
+							<Card.Title>{article.title}</Card.Title>
+							<Card.Text>{article.text}</Card.Text>
+							<div className="post-info flexbox">
+								<Card.Text>{article.date_created}</Card.Text>
+							</div>
+						</Card.ImgOverlay>
+					</Card>
+				</div>
+			</Col>
+		));
 
 	return (
 		<div className="container">
@@ -33,23 +66,47 @@ function HomePage() {
 							<Navbar.Toggle aria-controls="basic-navbar-nav" />
 							<Navbar.Collapse id="basic-navbar-nav">
 								<Nav className="me-auto">
-									<ul
-										className="navbar-nav text-upper"
-										role="list"
-									>
+									<ul className="navbar-nav text-upper">
 										<li>
-											<Nav.Link href="#home">
-												Home
+											<Nav.Link
+												href="#home"
+												onClick={() => setFilter("")}
+											>
+												All
 											</Nav.Link>
 										</li>
 										<li>
-											<Nav.Link href="#home">
-												Home
+											<Nav.Link
+												href="#home"
+												onClick={() =>
+													setFilter(
+														"inter-dimensional"
+													)
+												}
+											>
+												Inter-Dimensional
 											</Nav.Link>
 										</li>
 										<li>
-											<Nav.Link href="#home">
-												Home
+											<Nav.Link
+												href="#qotd"
+												onClick={() =>
+													setFilter("qotd")
+												}
+											>
+												Quotes of the Day
+											</Nav.Link>
+										</li>
+										<li>
+											<Nav.Link
+												href="#home"
+												onClick={() =>
+													setFilter(
+														"quasi-dimensional"
+													)
+												}
+											>
+												Quasi-Dimensional
 											</Nav.Link>
 										</li>
 									</ul>
@@ -59,23 +116,9 @@ function HomePage() {
 					</Navbar>
 				</div>
 			</header>
-			<div className="content-container">
-				<article className="single-post">
-					<div className="post-container">
-						<a href="#">
-							<img src="" alt="" />
-						</a>
-						<div className="post-content">
-							<a className="genre"></a>
-							<h3 className="post-title"></h3>
-							<ul className="post-info">
-								<li className="author"></li>
-								<li className="date-created"></li>
-							</ul>
-						</div>
-					</div>
-				</article>
-			</div>
+			<Container className="content-container">
+				<Row>{articlesHTML} </Row>
+			</Container>
 		</div>
 	);
 }

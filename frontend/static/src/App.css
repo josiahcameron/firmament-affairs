@@ -20,8 +20,12 @@ body {
   margin: 0;
 }
 
-.container {
-  margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
+
+li {
+  list-style: none;
 }
+
+.flexbox{
+  display: flex;
+}
+
