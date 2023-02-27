@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 const INITIAL_STATE = {
 	username: "",
@@ -7,8 +8,10 @@ const INITIAL_STATE = {
 	password: "",
 };
 
-function LoginForm({ setAuth }) {
+function LoginForm() {
 	const [state, setState] = useState(INITIAL_STATE);
+	const [setAuth] = useOutletContext();
+	const navigate = useNavigate();
 
 	const handleError = (err) => {
 		console.warn(err);
@@ -56,43 +59,121 @@ function LoginForm({ setAuth }) {
 
 		// Will set the authorization to true after they're logged in. Will then trigger a rerender that will switch over to ChannelList
 		setAuth(true);
+		navigate("/");
+
+		const responseTest = await fetch("/dj-rest-auth/user/").catch(
+			handleError
+		);
+		const testData = await responseTest.json();
+		// console.log(testData);
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor="username">Username</label>
-			<input
-				id="username"
-				type="text"
-				placeholder="Enter Username"
-				name="username"
-				value={state.username}
-				onChange={handleInput}
-			/>
+		<>
+			<div className="login-dark">
+				<form>
+					<h2 className="sr-only">Login Form</h2>
+					{/* <div className="illustration">
+				<i className="icon ion-ios-locked-outline">
+					</i></div> */}
+					<div className="form-group">
+						<input
+							id="username"
+							type="text"
+							placeholder="Enter Username"
+							name="username"
+							value={state.username}
+							onChange={handleInput}
+						/>
+					</div>
 
-			<label htmlFor="email">email</label>
-			<input
-				id="email"
-				type="email"
-				placeholder="Enter Email"
-				name="email"
-				value={state.email}
-				onChange={handleInput}
-			/>
+					<div className="form-group">
+						<input
+							className="form-control"
+							id="login-email"
+							type="email"
+							placeholder="Enter Email"
+							name="email"
+							value={state.email}
+							onChange={handleInput}
+						/>
+					</div>
+					<div className="form-group"></div>
 
-			<label htmlFor="password">Password</label>
-			<input
-				id="password"
-				type="password"
-				placeholder="Enter Password"
-				name="password"
-				value={state.password}
-				onChange={handleInput}
-			/>
-
-			<button type="submit">Login</button>
-		</form>
+					<div className="form-group">
+						<input
+							className="form-control"
+							id="password"
+							type="password"
+							placeholder="Enter Password"
+							name="password"
+							value={state.password}
+							onChange={handleInput}
+						/>
+					</div>
+					<div className="form-group">
+						<button
+							onClick={handleSubmit}
+							className="btn btn-primary btn-block"
+						>
+							Log In
+						</button>
+					</div>
+					<a className="forgot" href="#">
+						Forgot your email or password?
+					</a>
+				</form>
+			</div>
+		</>
 	);
 }
 
 export default LoginForm;
+
+// <form className="form form-login" onSubmit={handleSubmit}>
+// 	{/* Fieldset tag is used to group elements of a form */}
+// 	<fieldset>
+// 		{/* The legend defines the caption/title for the fieldset tag and is its first element */}
+// 		<legend>
+// 			Please, enter your email and password for login.
+// 		</legend>
+// 		<div className="input-block">
+// 			<label htmlFor="login-username">Username</label>
+// 			<input
+// 				id="username"
+// 				type="text"
+// 				placeholder="Enter Username"
+// 				name="username"
+// 				value={state.username}
+// 				onChange={handleInput}
+// 			/>
+// 		</div>
+
+// 		<div className="input-block">
+// 			<label htmlFor="login-email">email</label>
+// 			<input
+// 				id="login-email"
+// 				type="email"
+// 				placeholder="Enter Email"
+// 				name="email"
+// 				value={state.email}
+// 				onChange={handleInput}
+// 			/>
+// 		</div>
+
+// 		<div className="input-block">
+// 			<label htmlFor="login-password">Password</label>
+// 			<input
+// 				id="password"
+// 				type="password"
+// 				placeholder="Enter Password"
+// 				name="password"
+// 				value={state.password}
+// 				onChange={handleInput}
+// 			/>
+// 		</div>
+// 	</fieldset>
+// 	<button type="submit" className="btn-login">
+// 		Login
+// 	</button>
+// </form>

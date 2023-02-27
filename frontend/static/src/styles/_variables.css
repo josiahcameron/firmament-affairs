@@ -1,5 +1,7 @@
 :root{
-    --primary-color: rgb(161, 65, 75);
-    --secondary-color: rgb(227, 129, 112);
-    --accent: rgb(13,19, 143);
+    --highlight: rgb(238, 238, 238);
+    --primary-color: rgb(174, 228, 237);
+    --secondary-color: rgb(90, 121, 200);
+    --accent: rgb(60, 51, 154);
+    --accent2: rgb(145, 35, 102);
 }

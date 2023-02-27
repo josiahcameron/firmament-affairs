@@ -5,7 +5,9 @@ from rest_framework import generics
 
 from . import models
 from .serializers import ArticleSerializer
+from .permissions import IfAdminOrReadOnly, IsAuthorOrReadOnly
 
+# Return the User model that is active in this project.
 User = get_user_model()
 
 
@@ -17,5 +19,26 @@ class ArticleAPIView(generics.ListAPIView):
         queryset = models.Article.objects.all()
         category = self.request.query_params.get('category')
         if category is not None:
-            queryset = queryset.filter(article__category=category)
+            queryset = queryset.filter(category=category)
         return queryset
+
+
+class ArticleDraftView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ArticleSerializer
+    permission_classes = IsAuthorOrReadOnly, IfAdminOrReadOnly
+
+    def get_queryset(self):
+        queryset = models.Article.objects.all()
+        author = self.request.query_params.get('author')
+        if self.author is User:
+            queryset = queryset.filter(author=author)
+        return queryset
+
+
+class ArticleCreateView(generics.CreateAPIView):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        queryset = models.Article.objects.all()
+        author = self.request.user
+        queryset = queryset.filter(author=author)

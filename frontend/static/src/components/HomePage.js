@@ -9,11 +9,16 @@ import Col from "react-bootstrap/Col";
 
 function HomePage() {
 	const [articles, setArticles] = useState(null);
-	const [filter, setFilter] = useState("");
+	const [filter, setFilter] = useState(null);
 
 	useEffect(() => {
 		const getArticles = async () => {
-			const response = await fetch(`/api_v1/articles?category=${filter}`);
+			let url = `/api_v1/articles/`;
+
+			if (filter) {
+				url += `?category=${filter}`;
+			}
+			const response = await fetch(url);
 
 			if (!response.ok) {
 				throw new Error("Network response was not OK");
@@ -31,30 +36,23 @@ function HomePage() {
 		return <div>Fetching Articles...</div>;
 	}
 
-	const articlesHTML = articles
-		// .filter((article) =>
-		// 	filter ? article.category.toLowerCase() === filter : article
-		// )
-		// .
-		.map((article) => (
-			<Col className="container">
-				<div key={article.id} className="post-container">
-					<Card className="bg-dark text-white single-post">
-						<Card.Img src={article.image} alt="post-image" />
-						<Card.ImgOverlay>
-							<a className="article-category">
-								{article.category}
-							</a>
-							<Card.Title>{article.title}</Card.Title>
-							<Card.Text>{article.text}</Card.Text>
-							<div className="post-info flexbox">
-								<Card.Text>{article.date_created}</Card.Text>
-							</div>
-						</Card.ImgOverlay>
-					</Card>
-				</div>
-			</Col>
-		));
+	const articlesHTML = articles.map((article) => (
+		<Col key={article.id} className="container">
+			<div className="post-container">
+				<Card className="bg-dark text-white single-post">
+					<Card.Img src={article.image} alt="post-image" />
+					<Card.ImgOverlay>
+						<a className="article-category">{article.category}</a>
+						<Card.Title>{article.title}</Card.Title>
+						<Card.Text>{article.text}</Card.Text>
+						<div className="post-info flexbox">
+							<Card.Text>{article.date_created}</Card.Text>
+						</div>
+					</Card.ImgOverlay>
+				</Card>
+			</div>
+		</Col>
+	));
 
 	return (
 		<div className="container">
