@@ -20,6 +20,7 @@ root.render(
 				{/*  */}
 				<Route path="/" element={<App />}>
 					{/* Nesting router */}
+					<Route path="home" element={<HomePage />} />
 					<Route path="login" element={<LoginForm />} />
 					<Route path="register" element={<RegistrationForm />} />
 					<Route path="drafts" element={<ArticleDrafts />} />

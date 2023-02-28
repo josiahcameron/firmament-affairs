@@ -23,22 +23,16 @@ class ArticleAPIView(generics.ListAPIView):
         return queryset
 
 
-class ArticleDraftView(generics.RetrieveUpdateDestroyAPIView):
+class ArticleDraftView(generics.ListCreateAPIView):
     serializer_class = ArticleSerializer
     permission_classes = IsAuthorOrReadOnly, IfAdminOrReadOnly
 
     def get_queryset(self):
-        queryset = models.Article.objects.all()
-        author = self.request.query_params.get('author')
-        if self.author is User:
-            queryset = queryset.filter(author=author)
-        return queryset
+        return models.Article.objects.filter(author=self.request.user)
 
 
 class ArticleCreateView(generics.CreateAPIView):
     serializer_class = ArticleSerializer
 
-    def get_queryset(self):
-        queryset = models.Article.objects.all()
-        author = self.request.user
-        queryset = queryset.filter(author=author)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

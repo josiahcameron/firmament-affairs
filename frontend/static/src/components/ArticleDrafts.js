@@ -5,15 +5,11 @@ import ArticleForm from "./ArticleForm";
 
 function ArticleDrafts() {
 	const [articles, setArticles] = useState(null);
-	const [filter, setFilter] = useState(null);
 
 	useEffect(() => {
 		const getArticles = async () => {
-			let url = `/api_v1/articles/`;
+			let url = `/api_v1/drafts/`;
 
-			if (filter) {
-				url += `?category=${filter}`;
-			}
 			const response = await fetch(url);
 
 			if (!response.ok) {
@@ -26,7 +22,7 @@ function ArticleDrafts() {
 		};
 
 		getArticles();
-	}, [filter]);
+	}, []);
 
 	if (!articles) {
 		return <div>Fetching Articles...</div>;
@@ -45,13 +41,9 @@ function ArticleDrafts() {
 							<li className="list-group-item">
 								<h4>Title: {article.title}</h4>
 								<p>Text: {article.text}</p>
-								<p>
-									Date Created: {article.date_created}
-									Author: {article.author.name}
-								</p>
-								<p>
-									Category: {article.category.toUpperCase()}
-								</p>
+								<p>Date Created: {article.created_at}</p>
+								<p> Author: {article.author}</p>
+								<p>Category: {article.category}</p>
 								<div className="draft-options">
 									<button
 										type="button"
@@ -81,7 +73,9 @@ function ArticleDrafts() {
 
 	return (
 		<>
-			<div className="article-form">{<ArticleForm />}</div>
+			<div className="article-form">
+				{<ArticleForm articles={articles} setArticles={setArticles} />}
+			</div>
 			<main className="articles">{articlesHTML}</main>
 		</>
 	);

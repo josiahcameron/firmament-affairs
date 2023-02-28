@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-function ArticleForm() {
+function ArticleForm({ articles, setArticles }) {
 	const [article, setArticle] = useState({
 		title: "",
-		caption: "",
+		text: "",
+		category: "",
+		is_submitted: false,
 	});
 
 	const handleError = (err) => {
@@ -19,12 +21,26 @@ function ArticleForm() {
 		});
 	};
 
+	const handleSelect = (event) => {
+		const { name, value } = event.target;
+		setArticle({
+			...article,
+			[name]: value,
+		});
+		console.log(article);
+	};
+
 	const handleSubmit = async (event) => {
-		console.log();
 		event.preventDefault();
+		setArticle({
+			...article,
+			is_submitted: true,
+		});
 		const formData = new FormData();
 		formData.append("title", article.title);
-		formData.append("caption", article.caption);
+		formData.append("text", article.text);
+		formData.append("category", article.category);
+		formData.append("is_submitted", article.is_submitted);
 
 		const options = {
 			method: "POST",
@@ -36,6 +52,8 @@ function ArticleForm() {
 
 		const response = await fetch("/api_v1/add-article/", options);
 		const data = await response.json();
+		setArticles([...articles, data]);
+		console.log(formData);
 		console.log({ data });
 	};
 
@@ -61,11 +79,25 @@ function ArticleForm() {
 				<input
 					type="text"
 					className="form-control"
-					id="caption"
-					name="caption"
-					value={article.caption}
+					id="text"
+					name="text"
+					value={article.text}
 					onChange={handleInput}
 				/>
+			</div>
+			<div className="form-group">
+				<label htmlFor="category">Select Category</label>
+				<select
+					className="form-control mb-3"
+					id="category"
+					name="category"
+					onChange={handleSelect}
+				>
+					<option value={"MC"}>Microcosm</option>
+					<option value={"QOTD"}>Quote of the Day</option>
+					<option value={"I_D"}>Inter-dimensional</option>
+					<option value={"Q_D"}>Quasi-dimensional</option>
+				</select>
 			</div>
 			<button type="submit" className="btn btn-success">
 				Submit
