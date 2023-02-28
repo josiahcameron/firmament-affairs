@@ -28,6 +28,7 @@ class ArticleDraftView(generics.ListCreateAPIView):
     permission_classes = IsAuthorOrReadOnly, IfAdminOrReadOnly
 
     def get_queryset(self):
+        # Need to add a condition to only render if the article isn't submitted
         return models.Article.objects.filter(author=self.request.user)
 
 
@@ -36,3 +37,14 @@ class ArticleCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class ArticleEditAndDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ArticleSerializer
+    queryset = models.Article.objects.all()
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def perform_update(self, serializer):
+        serializer.save()

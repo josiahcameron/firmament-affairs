@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import ArticleForm from "./ArticleForm";
+import Cookies from "js-cookie";
 
 function ArticleDrafts() {
 	const [articles, setArticles] = useState(null);
@@ -27,6 +28,19 @@ function ArticleDrafts() {
 	if (!articles) {
 		return <div>Fetching Articles...</div>;
 	}
+
+	const handleDelete = async (article) => {
+		const options = {
+			method: "DELETE",
+			headers: {
+				"X-CSRFToken": Cookies.get("csrftoken"),
+			},
+		};
+		const response = await fetch(`api_v1/destroy/${article}`, options);
+		if (!response.ok) {
+			throw new Error("Network response not Ok");
+		}
+	};
 
 	const articlesHTML = articles
 		// .filter((article) =>
@@ -54,6 +68,7 @@ function ArticleDrafts() {
 									<button
 										type="button"
 										className="btn btn-danger delete-button"
+										onClick={() => handleDelete(article.id)}
 									>
 										Delete
 									</button>
