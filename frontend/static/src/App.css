@@ -1,34 +1,34 @@
-@import url('./styles/_registration.css');
+@import url("./styles/_registration.css");
 @import url("./styles/_variables.css");
 @import url("./styles/_homepage.css");
 @import url("./styles/_login-form.css");
 @import url("./styles/_login-registration.css");
+@import url("./styles/_drafts.css");
 
 html {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
 }
 
 body {
-  background: var(--primary-color);
-  color: var(--primary-color);
-  font-family: var(--highlight);
-  font-size: 15px;
-  line-height: 1.55; 
-  margin: 0;
-  height: 100%;
+	background: var(--primary-color);
+	color: var(--primary-color);
+	font-family: var(--highlight);
+	font-size: 15px;
+	line-height: 1.55;
+	margin: 0;
+	height: 100%;
 }
-
 
 li {
-  list-style: none;
+	list-style: none;
 }
 
-.flexbox{
-  display: flex;
+.flexbox {
+	display: flex;
 }
-
