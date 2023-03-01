@@ -70,7 +70,7 @@ function Article({ article, handleDelete, updateArticle }) {
 								onChange={(e) => setText(e.target.value)}
 							/>
 							<p>Date Created: {article.created_at}</p>
-							<p>Author: {article.author}</p>
+							<p>Author: {article.author_username}</p>
 							<p>Category: {article.category}</p>
 							{!article.is_submitted && (
 								<div className="draft-options">

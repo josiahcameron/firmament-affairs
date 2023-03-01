@@ -29,6 +29,7 @@ class Article(models.Model):
     updated_at = models.DateTimeField(null=True, auto_now=True)
     is_published = models.BooleanField(null=True, default=False)
     is_submitted = models.BooleanField(null=True, default=False)
+    is_archived = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return self.title

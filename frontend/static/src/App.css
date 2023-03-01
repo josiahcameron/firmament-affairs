@@ -4,6 +4,7 @@
 @import url("./styles/_login-form.css");
 @import url("./styles/_login-registration.css");
 @import url("./styles/_drafts.css");
+@import url("./styles/_admin.css");
 
 html {
 	box-sizing: border-box;

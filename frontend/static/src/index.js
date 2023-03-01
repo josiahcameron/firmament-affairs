@@ -11,6 +11,7 @@ import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegistrationForm";
 import LoginRegisterForm from "./components/LoginRegisterForm";
 import ArticleDrafts from "./components/ArticleDrafts";
+import AdminDash from "./components/AdminDash";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +25,7 @@ root.render(
 					<Route path="login" element={<LoginForm />} />
 					<Route path="register" element={<RegistrationForm />} />
 					<Route path="drafts" element={<ArticleDrafts />} />
+					<Route path="admin" element={<AdminDash />} />
 				</Route>
 			</Routes>
 		</Router>

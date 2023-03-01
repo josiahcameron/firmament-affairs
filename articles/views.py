@@ -29,7 +29,10 @@ class ArticleDraftView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         # Need to add a condition to only render if the article isn't submitted
-        return models.Article.objects.filter(author=self.request.user)
+        if self.request.user.is_superuser:
+            return models.Article.objects.all()
+        else:
+            return models.Article.objects.filter(author=self.request.user)
 
 
 class ArticleCreateView(generics.CreateAPIView):
