@@ -1,8 +1,9 @@
 .input-preview {
 	border: none;
 	margin-left: 0;
-	margin-bottom: 1rem;
+	min-height: 16px;
 	background-color: white;
 	padding: 0;
 	color: black;
+	resize: none;
 }

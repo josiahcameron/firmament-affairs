@@ -7,12 +7,13 @@ import ArticleForm from "./ArticleForm";
 import Cookies from "js-cookie";
 import EditArticle from "./EditArticle";
 
-function Article({ article, handleDelete }) {
+function Article({ article, handleDelete, updateArticle }) {
 	const [editMode, setEditMode] = useState(false);
 	const [text, setText] = useState(article.text);
 
 	const saveEdit = async (e) => {
-		article.text = text;
+		const updatedArticle = { ...article };
+		updatedArticle.text = text;
 
 		const options = {
 			method: "PATCH",
@@ -20,7 +21,7 @@ function Article({ article, handleDelete }) {
 				"Content-Type": "application/json",
 				"X-CSRFToken": Cookies.get("csrftoken"),
 			},
-			body: JSON.stringify(article),
+			body: JSON.stringify(updatedArticle),
 		};
 		const response = await fetch(`/api_v1/update/${article.id}/`, options);
 		if (!response.ok) {
@@ -28,18 +29,30 @@ function Article({ article, handleDelete }) {
 		}
 
 		setEditMode(false);
+		const data = await response.json();
+		updateArticle(data);
+	};
 
-		// const options = {
-		// 	method: "Post",
-		// 	headers: {
-		// 		"X-CSRFToken": Cookies.get("csrftoken"),
-		// 	},
-		// 	body
-		// };
-		// const response = await fetch(`api_v1/update/${article.id}`, options);
-		// if (!response.ok) {
-		// 	throw new Error("Network response not Ok");
-		// }
+	const handleSubmit = async (e) => {
+		const updatedArticle = { ...article };
+		updatedArticle.is_submitted = true;
+		delete updatedArticle.id;
+
+		const options = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": Cookies.get("csrftoken"),
+			},
+			body: JSON.stringify(updatedArticle),
+		};
+		const response = await fetch(`/api_v1/update/${article.id}/`, options);
+		if (!response.ok) {
+			throw new Error("Network response not Ok");
+		}
+
+		const data = await response.json();
+		updateArticle(data);
 	};
 
 	return (
@@ -49,7 +62,7 @@ function Article({ article, handleDelete }) {
 					<ul className="list-group">
 						<li className="list-group-item">
 							<h4>Title: {article.title}</h4>
-							<input
+							<textarea
 								type="text"
 								className={`${!editMode && "input-preview"}`}
 								disabled={!editMode}
@@ -59,39 +72,42 @@ function Article({ article, handleDelete }) {
 							<p>Date Created: {article.created_at}</p>
 							<p>Author: {article.author}</p>
 							<p>Category: {article.category}</p>
-							<div className="draft-options">
-								{editMode ? (
-									<button
-										type="button"
-										className="btn btn-primary save-button"
-										onClick={(e) => saveEdit()}
-									>
-										Save
-									</button>
-								) : (
-									<button
-										type="button"
-										className="btn btn-primary edit-button"
-										onClick={() => setEditMode(true)}
-									>
-										Edit
-									</button>
-								)}
+							{!article.is_submitted && (
+								<div className="draft-options">
+									{editMode ? (
+										<button
+											type="button"
+											className="btn btn-primary save-button"
+											onClick={(e) => saveEdit()}
+										>
+											Save
+										</button>
+									) : (
+										<button
+											type="button"
+											className="btn btn-primary edit-button"
+											onClick={() => setEditMode(true)}
+										>
+											Edit
+										</button>
+									)}
 
-								<button
-									type="button"
-									className="btn btn-danger delete-button"
-									onClick={() => handleDelete(article.id)}
-								>
-									Delete
-								</button>
-								<button
-									type="button"
-									className="btn btn-success submit-button"
-								>
-									Submit
-								</button>
-							</div>
+									<button
+										type="button"
+										className="btn btn-danger delete-button"
+										onClick={() => handleDelete(article.id)}
+									>
+										Delete
+									</button>
+									<button
+										type="button"
+										className="btn btn-success submit-button"
+										onClick={handleSubmit}
+									>
+										Submit
+									</button>
+								</div>
+							)}
 						</li>
 					</ul>
 				</div>
@@ -125,6 +141,15 @@ function ArticleDrafts() {
 		return <div>Fetching Articles...</div>;
 	}
 
+	const updateArticle = (updatedArticle) => {
+		const updatedArticles = [...articles];
+		const index = articles.findIndex(
+			(article) => article.id === updatedArticle.id
+		);
+		updatedArticles[index] = updatedArticle;
+		setArticles(updatedArticles);
+	};
+
 	const handleDelete = async (article) => {
 		const options = {
 			method: "DELETE",
@@ -143,36 +168,9 @@ function ArticleDrafts() {
 			key={article.id}
 			article={article}
 			handleDelete={handleDelete}
+			updateArticle={updateArticle}
 		/>
 	));
-
-	// let editArticleHTML = [];
-
-	// const handleEdit = (article) => {
-	// 	console.log(editMode);
-	// 	editArticleHTML = (
-	// 		<Form>
-	// 			<Form.Group className="mb-3" controlId="text">
-	// 				<Form.Label>Title</Form.Label>
-	// 				<Form.Control type="title" placeholder="Enter title" />
-	// 				<Form.Text>{article.title}</Form.Text>
-	// 			</Form.Group>
-
-	// 			<Form.Group className="mb-3" controlId="text">
-	// 				<Form.Label>{article.text}</Form.Label>
-	// 				<Form.Control type="text" placeholder="Enter text" />
-	// 			</Form.Group>
-
-	// 			<Button
-	// 				onSubmit={setEditMode(false)}
-	// 				variant="primary"
-	// 				type="submit"
-	// 			>
-	// 				Submit
-	// 			</Button>
-	// 		</Form>
-	// 	);
-	// };
 
 	return (
 		<>
@@ -185,3 +183,31 @@ function ArticleDrafts() {
 }
 
 export default ArticleDrafts;
+
+// let editArticleHTML = [];
+
+// const handleEdit = (article) => {
+// 	console.log(editMode);
+// 	editArticleHTML = (
+// 		<Form>
+// 			<Form.Group className="mb-3" controlId="text">
+// 				<Form.Label>Title</Form.Label>
+// 				<Form.Control type="title" placeholder="Enter title" />
+// 				<Form.Text>{article.title}</Form.Text>
+// 			</Form.Group>
+
+// 			<Form.Group className="mb-3" controlId="text">
+// 				<Form.Label>{article.text}</Form.Label>
+// 				<Form.Control type="text" placeholder="Enter text" />
+// 			</Form.Group>
+
+// 			<Button
+// 				onSubmit={setEditMode(false)}
+// 				variant="primary"
+// 				type="submit"
+// 			>
+// 				Submit
+// 			</Button>
+// 		</Form>
+// 	);
+// };
