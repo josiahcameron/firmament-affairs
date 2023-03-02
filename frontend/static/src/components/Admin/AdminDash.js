@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import SubmittedDrafts from "./SubmittedDrafts";
 import Cookies from "js-cookie";
+import ArticleForm from "../drafts/ArticleForm";
 
 function AdminDash() {
 	const [articles, setArticles] = useState(null);
@@ -74,6 +75,7 @@ function AdminDash() {
 
 	return (
 		<>
+			<ArticleForm />
 			<div className="admin-wrapper">
 				<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 					<Container>
