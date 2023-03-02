@@ -1,12 +1,11 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 
-import HomePage from "./components/HomePage";
-import LoginForm from "./components/LoginForm";
-import RegistrationForm from "./components/RegistrationForm";
-import LoginRegisterForm from "./components/LoginRegisterForm";
-import ArticleDrafts from "./components/ArticleDrafts";
-import Header from "./components/Header";
+import HomePage from "./components/home/HomePage";
+import LoginForm from "./components/auth/LoginForm";
+import RegistrationForm from "./components/auth/RegistrationForm";
+import ArticleDrafts from "./components/drafts/ArticleDrafts";
+import Header from "./components/header/Header";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 

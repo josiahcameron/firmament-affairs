@@ -7,7 +7,7 @@ function Header() {
 				<NavLink to="/register">Register</NavLink>
 			</button>
 			<button>
-				<NavLink to="/register">Register</NavLink>
+				<NavLink to="/login">Login</NavLink>
 			</button>
 			<button>
 				<NavLink to="/drafts">Drafts</NavLink>

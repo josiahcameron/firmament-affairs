@@ -13,7 +13,7 @@ function HomePage() {
 
 	useEffect(() => {
 		const getArticles = async () => {
-			let url = `/api_v1/articles/`;
+			let url = `/api_v1/home/`;
 
 			if (filter) {
 				url += `?category=${filter}`;

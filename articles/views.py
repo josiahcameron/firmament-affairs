@@ -23,6 +23,17 @@ class ArticleAPIView(generics.ListAPIView):
         return queryset
 
 
+class HomePageAPIView(generics.ListAPIView):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        queryset = models.Article.objects.filter(is_published=True)
+        category = self.request.query_params.get('category')
+        if category is not None:
+            queryset = queryset.filter(category=category)
+        return queryset
+
+
 class ArticleDraftView(generics.ListCreateAPIView):
     serializer_class = ArticleSerializer
     permission_classes = IsAuthorOrReadOnly, IfAdminOrReadOnly

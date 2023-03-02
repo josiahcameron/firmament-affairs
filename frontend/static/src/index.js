@@ -6,12 +6,11 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 
-import HomePage from "./components/HomePage";
-import LoginForm from "./components/LoginForm";
-import RegistrationForm from "./components/RegistrationForm";
-import LoginRegisterForm from "./components/LoginRegisterForm";
-import ArticleDrafts from "./components/ArticleDrafts";
-import AdminDash from "./components/AdminDash";
+import HomePage from "./components/home/HomePage";
+import LoginForm from "./components/auth/LoginForm";
+import RegistrationForm from "./components/auth/RegistrationForm";
+import ArticleDrafts from "./components/drafts/ArticleDrafts";
+import AdminDash from "./components/admin/AdminDash";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

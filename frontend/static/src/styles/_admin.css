@@ -12,3 +12,13 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.admin-wrapper {
+	background-color: midnightblue;
+	min-height: 100vh;
+}
+
+/* 
+	position: relative;
+	height: auto;
+	min-height: 100% !important; */

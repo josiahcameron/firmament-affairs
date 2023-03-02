@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import SubmittedDrafts from "./Admin/SubmittedDrafts";
+import { useState, useEffect } from "react";
+
+import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+
 import Cookies from "js-cookie";
 
-function AdminDash() {
+import ArticleForm from "./ArticleForm";
+import Article from "./Article";
+
+function ArticleDrafts() {
 	const [articles, setArticles] = useState(null);
 
 	useEffect(() => {
@@ -31,17 +33,12 @@ function AdminDash() {
 		return <div>Fetching Articles...</div>;
 	}
 
-	// Variable is a clone of the updated articles array to be sent to the api
 	const updateArticle = (updatedArticle) => {
 		const updatedArticles = [...articles];
-
-		// Will find the article instances
 		const index = articles.findIndex(
 			(article) => article.id === updatedArticle.id
 		);
-		// Sets the new article array to the value of the updated one
 		updatedArticles[index] = updatedArticle;
-		// Sets article array to the new updated values
 		setArticles(updatedArticles);
 	};
 
@@ -58,9 +55,8 @@ function AdminDash() {
 		}
 	};
 
-	// Iterates through articles array and runs it through the component
 	const articlesHTML = articles.map((article) => (
-		<SubmittedDrafts
+		<Article
 			key={article.id}
 			article={article}
 			handleDelete={handleDelete}
@@ -70,20 +66,40 @@ function AdminDash() {
 
 	return (
 		<>
-			<Navbar bg="dark" variant="dark">
-				<Container>
-					<Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-					<Navbar.Toggle />
-					<Navbar.Collapse className="justify-content-end">
-						<Navbar.Text>
-							Signed in as: <a href="#login">Mark Otto</a>
-						</Navbar.Text>
-					</Navbar.Collapse>
-				</Container>
-			</Navbar>
-			<div className="admin articles">{articlesHTML}</div>
+			<div className="article-form">
+				{<ArticleForm articles={articles} setArticles={setArticles} />}
+			</div>
+			<main className="articles">{articlesHTML}</main>
 		</>
 	);
 }
 
-export default AdminDash;
+export default ArticleDrafts;
+
+// let editArticleHTML = [];
+
+// const handleEdit = (article) => {
+// 	console.log(editMode);
+// 	editArticleHTML = (
+// 		<Form>
+// 			<Form.Group className="mb-3" controlId="text">
+// 				<Form.Label>Title</Form.Label>
+// 				<Form.Control type="title" placeholder="Enter title" />
+// 				<Form.Text>{article.title}</Form.Text>
+// 			</Form.Group>
+
+// 			<Form.Group className="mb-3" controlId="text">
+// 				<Form.Label>{article.text}</Form.Label>
+// 				<Form.Control type="text" placeholder="Enter text" />
+// 			</Form.Group>
+
+// 			<Button
+// 				onSubmit={setEditMode(false)}
+// 				variant="primary"
+// 				type="submit"
+// 			>
+// 				Submit
+// 			</Button>
+// 		</Form>
+// 	);
+// };
