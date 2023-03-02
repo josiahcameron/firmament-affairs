@@ -1,11 +1,14 @@
 from django.urls import path
 
-from .views import ArticleAPIView, ArticleCreateView, ArticleDraftView, ArticleEditAndDestroy, HomePageAPIView
+from . import views
+
+
 urlpatterns = [
-    path('articles/', ArticleAPIView.as_view()),
-    path('add-article/', ArticleCreateView.as_view()),
-    path('drafts/', ArticleDraftView.as_view()),
-    path('destroy/<int:pk>/', ArticleEditAndDestroy.as_view()),
-    path('update/<int:pk>/', ArticleEditAndDestroy.as_view()),
-    path('home/', HomePageAPIView.as_view())
+    path('articles/', views.ArticleAPIView.as_view()),
+    path('add-article/', views.ArticleCreateView.as_view()),
+    path('drafts/', views.ArticleDraftView.as_view()),
+    path('destroy/<int:pk>/', views.ArticleEditAndDestroy.as_view()),
+    path('update/<int:pk>/', views.ArticleEditAndDestroy.as_view()),
+    path('home/', views.HomePageAPIView.as_view()),
+    path('admin/', views.AdminArticleAPIView.as_view()),
 ]

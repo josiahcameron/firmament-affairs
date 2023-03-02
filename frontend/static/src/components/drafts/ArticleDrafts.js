@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import Cookies from "js-cookie";
 
 import ArticleForm from "./ArticleForm";
-import Article from "./Article";
+import Articles from "./Articles";
 
 function ArticleDrafts() {
 	const [articles, setArticles] = useState(null);
@@ -56,7 +56,7 @@ function ArticleDrafts() {
 	};
 
 	const articlesHTML = articles.map((article) => (
-		<Article
+		<Articles
 			key={article.id}
 			article={article}
 			handleDelete={handleDelete}

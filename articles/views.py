@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
+from rest_framework.decorators import api_view
 
 from . import models
 from .serializers import ArticleSerializer
@@ -27,10 +28,23 @@ class HomePageAPIView(generics.ListAPIView):
     serializer_class = ArticleSerializer
 
     def get_queryset(self):
-        queryset = models.Article.objects.filter(is_published=True)
+        queryset = models.Article.objects.filter(phase='published')
         category = self.request.query_params.get('category')
         if category is not None:
             queryset = queryset.filter(category=category)
+        return queryset
+
+
+class AdminArticleAPIView(generics.ListAPIView):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        phase = self.request.query_params.get('phase')
+        queryset = models.Article.objects.filter(
+            phase__in=['submitted', 'archived', 'published'])
+
+        if phase is not None:
+            queryset = queryset.filter(phase=phase)
         return queryset
 
 

@@ -18,6 +18,10 @@
 	min-height: 100vh;
 }
 
+.publish-button {
+	margin-left: auto;
+}
+
 /* 
 	position: relative;
 	height: auto;

@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import SubmittedDrafts from "./SubmittedDrafts";
 import Cookies from "js-cookie";
 
 function AdminDash() {
 	const [articles, setArticles] = useState(null);
+	const [filter, setFilter] = useState(null);
 
 	useEffect(() => {
 		const getArticles = async () => {
-			let url = `/api_v1/drafts/`;
+			let url = `/api_v1/admin/`;
+
+			if (filter) {
+				url += `?phase=${filter}`;
+			}
 
 			const response = await fetch(url);
 
@@ -25,7 +29,7 @@ function AdminDash() {
 		};
 
 		getArticles();
-	}, []);
+	}, [filter]);
 
 	if (!articles) {
 		return <div>Fetching Articles...</div>;
@@ -71,16 +75,43 @@ function AdminDash() {
 	return (
 		<>
 			<div className="admin-wrapper">
-				<Navbar bg="dark" variant="dark">
+				<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 					<Container>
-						<Navbar.Brand href="#home">
-							Navbar with text
-						</Navbar.Brand>
-						<Navbar.Toggle />
-						<Navbar.Collapse className="justify-content-end">
-							<Navbar.Text>
-								Signed in as: <a href="#login">Mark Otto</a>
-							</Navbar.Text>
+						<Navbar.Brand href="#articles">Article</Navbar.Brand>
+						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+						<Navbar.Collapse id="responsive-navbar-nav">
+							<Nav className="me-auto">
+								<Nav.Link
+									onClick={() => setFilter("")}
+									href="#all-articles"
+								>
+									All
+								</Nav.Link>
+								<Nav.Link
+									onClick={() => setFilter("submitted")}
+									href="#article-drafts"
+								>
+									Drafts
+								</Nav.Link>
+								<Nav.Link
+									onClick={() => setFilter("published")}
+									href="#published-articles"
+								>
+									Published
+								</Nav.Link>
+								<Nav.Link
+									onClick={() => setFilter("archived")}
+									href="#article-archive"
+								>
+									Archive
+								</Nav.Link>
+							</Nav>
+							<Nav>
+								<Nav.Link href="#deets">More deets</Nav.Link>
+								<Nav.Link eventKey={2} href="#memes">
+									Dank memes
+								</Nav.Link>
+							</Nav>
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>

@@ -30,7 +30,7 @@ function Article({ article, handleDelete, updateArticle }) {
 
 	const handleSubmit = async (e) => {
 		const updatedArticle = { ...article };
-		updatedArticle.is_submitted = true;
+		updatedArticle.phase = "submitted";
 		delete updatedArticle.id;
 
 		const options = {
@@ -67,7 +67,7 @@ function Article({ article, handleDelete, updateArticle }) {
 							<p>Date Created: {article.created_at}</p>
 							<p>Author: {article.author_username}</p>
 							<p>Category: {article.category}</p>
-							{!article.is_submitted && (
+							{article.phase == "draft" && (
 								<div className="draft-options">
 									{editMode ? (
 										<button

@@ -6,7 +6,29 @@ import Cookies from "js-cookie";
 function SubmittedDrafts({ article, updateArticle }) {
 	const publishDraft = async (e) => {
 		const updatedArticle = { ...article };
-		updatedArticle.is_published = true;
+		updatedArticle.phase = "published";
+
+		const options = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": Cookies.get("csrftoken"),
+			},
+			body: JSON.stringify(updatedArticle),
+		};
+
+		const response = await fetch(`/api_v1/update/${article.id}/`, options);
+		if (!response.ok) {
+			throw new Error("Network response not Ok");
+		}
+
+		const data = await response.json();
+		updateArticle(data);
+	};
+
+	const denyDraft = async (e) => {
+		const updatedArticle = { ...article };
+		updatedArticle.phase = "draft";
 
 		const options = {
 			method: "PATCH",
@@ -35,16 +57,31 @@ function SubmittedDrafts({ article, updateArticle }) {
 						<Card.Text>{article.text}</Card.Text>
 					</Card.Body>
 					<div className="button-container">
-						<Button variant="danger" size="md">
-							Deny Draft
-						</Button>
-						<Button
-							onClick={publishDraft}
-							variant="success"
-							size="md"
-						>
-							Publish Draft
-						</Button>
+						{
+							(article.phase = "draft" ? (
+								<>
+									<Button
+										onClick={denyDraft}
+										variant="danger"
+										size="md"
+									>
+										Deny Draft
+									</Button>
+									<Button
+										onClick={publishDraft}
+										variant="success"
+										size="md"
+										className="publish-button"
+									>
+										Publish Draft
+									</Button>
+								</>
+							) : (
+								<Button disabled variant="secondary" size="md">
+									Awaiting User Submission
+								</Button>
+							))
+						}
 					</div>
 				</Card>
 			</Col>
