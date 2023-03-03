@@ -2,29 +2,32 @@ import { NavLink } from "react-router-dom";
 
 function Header({ handleLogout }) {
 	return (
-		<nav class="top-nav">
-			<button type="button" class="btn btn-primary top-button">
-				<NavLink class="nav-text" to="/register">
+		<nav className="top-nav">
+			<button
+				type="button"
+				className="btn btn-primary top-button text-light"
+			>
+				<NavLink className="nav-text" to="/register">
 					Register
 				</NavLink>
 			</button>
-			<button type="button" class="btn btn-primary top-button">
-				<NavLink class="nav-text" to="/login">
+			<button type="button" className="btn btn-primary top-button ">
+				<NavLink className="nav-text" to="/login">
 					Login
 				</NavLink>
 			</button>
-			<button type="button" class="btn btn-primary top-button">
-				<NavLink class="nav-text" to="/drafts">
+			<button type="button" className="btn btn-primary top-button">
+				<NavLink className="nav-text" to="/drafts">
 					Drafts
 				</NavLink>
 			</button>
-			<button type="button" class="btn btn-primary top-button">
-				<NavLink class="nav-text" to="/home">
+			<button type="button" className="btn btn-primary top-button">
+				<NavLink className="nav-text" to="/home">
 					Home
 				</NavLink>
 			</button>
-			<button type="button" class="btn btn-primary top-button">
-				<NavLink class="nav-text" to="/admin">
+			<button type="button" className="btn btn-primary top-button">
+				<NavLink className="nav-text" to="/admin">
 					Admin
 				</NavLink>
 			</button>
