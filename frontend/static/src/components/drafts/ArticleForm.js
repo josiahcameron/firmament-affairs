@@ -6,7 +6,7 @@ function ArticleForm({ articles, setArticles }) {
 		title: "",
 		text: "",
 		category: "",
-		is_submitted: false,
+		phase: "",
 	});
 
 	const handleError = (err) => {
@@ -40,7 +40,7 @@ function ArticleForm({ articles, setArticles }) {
 		formData.append("title", article.title);
 		formData.append("text", article.text);
 		formData.append("category", article.category);
-		formData.append("is_submitted", article.is_submitted);
+		formData.append("submitted", article.phase);
 
 		const options = {
 			method: "POST",
@@ -58,51 +58,61 @@ function ArticleForm({ articles, setArticles }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<div className="mb-3">
-				<label htmlFor="title" className="form-label">
-					Title
-				</label>
-				<input
-					type="text"
-					className="form-control"
-					id="title"
-					name="title"
-					value={article.title}
-					onChange={handleInput}
-				/>
-			</div>
-			<div className="mb-3">
-				<label htmlFor="caption" className="form-label">
-					Caption
-				</label>
-				<input
-					type="text"
-					className="form-control"
-					id="text"
-					name="text"
-					value={article.text}
-					onChange={handleInput}
-				/>
-			</div>
-			<div className="form-group">
-				<label htmlFor="category">Select Category</label>
-				<select
-					className="form-control mb-3"
-					id="category"
-					name="category"
-					onChange={handleSelect}
-				>
-					<option value={"MC"}>Microcosm</option>
-					<option value={"QOTD"}>Quote of the Day</option>
-					<option value={"I_D"}>Inter-dimensional</option>
-					<option value={"Q_D"}>Quasi-dimensional</option>
-				</select>
-			</div>
-			<button type="submit" className="btn btn-success">
-				Submit
-			</button>
-		</form>
+		<div className="article-submit-form-wrapper">
+			<form onSubmit={handleSubmit}>
+				<div className="mb-3">
+					<label htmlFor="title" className="form-label title">
+						Title
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="title"
+						name="title"
+						value={article.title}
+						onChange={handleInput}
+					/>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="caption" className="form-label caption">
+						Caption
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="text"
+						name="text"
+						value={article.text}
+						onChange={handleInput}
+					/>
+				</div>
+				<div className="form-group">
+					<label className="form-label" htmlFor="category">
+						Select Category
+					</label>
+					<select
+						className="form-control mb-3"
+						id="category"
+						name="category"
+						onChange={handleSelect}
+					>
+						<option value={"Microcosm"}>Microcosm</option>
+						<option value={"Quote of the Day"}>
+							Quote of the Day
+						</option>
+						<option value={"Inter-dimensional"}>
+							Inter-dimensional
+						</option>
+						<option value={"Quasi-dimensional"}>
+							Quasi-dimensional
+						</option>
+					</select>
+				</div>
+				<button type="submit" className="btn btn-success">
+					Submit
+				</button>
+			</form>
+		</div>
 	);
 }
 

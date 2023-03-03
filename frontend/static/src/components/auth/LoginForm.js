@@ -59,7 +59,7 @@ function LoginForm() {
 
 		// Will set the authorization to true after they're logged in. Will then trigger a rerender that will switch over to ChannelList
 		setAuth(true);
-		navigate("/");
+		navigate("/home");
 
 		const responseTest = await fetch("/dj-rest-auth/user/").catch(
 			handleError
@@ -78,6 +78,7 @@ function LoginForm() {
 					</i></div> */}
 					<div className="form-group">
 						<input
+							className="form-control"
 							id="username"
 							type="text"
 							placeholder="Enter Username"
@@ -119,9 +120,6 @@ function LoginForm() {
 							Log In
 						</button>
 					</div>
-					<a className="forgot" href="#">
-						Forgot your email or password?
-					</a>
 				</form>
 			</div>
 		</>

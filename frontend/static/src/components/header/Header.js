@@ -3,10 +3,7 @@ import { NavLink } from "react-router-dom";
 function Header({ handleLogout }) {
 	return (
 		<nav className="top-nav">
-			<button
-				type="button"
-				className="btn btn-primary top-button text-light"
-			>
+			<button type="button" className="btn btn-primary top-button">
 				<NavLink className="nav-text" to="/register">
 					Register
 				</NavLink>

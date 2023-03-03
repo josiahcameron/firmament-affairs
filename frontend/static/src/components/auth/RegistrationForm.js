@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
 
 function RegistrationForm() {
 	const [state, setState] = useState(INITIAL_STATE);
+	const navigate = useNavigate();
 
 	const handleError = (err) => {
 		console.warn(err);
@@ -24,7 +26,6 @@ function RegistrationForm() {
 			...prevState,
 			[name]: value,
 		}));
-		console.log(state);
 	};
 
 	const addUser = async (event) => {
@@ -47,6 +48,7 @@ function RegistrationForm() {
 		if (!response.ok) {
 			throw new Error("Network response not Ok");
 		}
+		navigate("/home");
 	};
 
 	return (

@@ -9,6 +9,7 @@ import ArticleForm from "../drafts/ArticleForm";
 function AdminDash() {
 	const [articles, setArticles] = useState(null);
 	const [filter, setFilter] = useState(null);
+	const [showForm, setShowForm] = useState(false);
 
 	useEffect(() => {
 		const getArticles = async () => {
@@ -75,7 +76,6 @@ function AdminDash() {
 
 	return (
 		<>
-			<ArticleForm />
 			<div className="admin-wrapper">
 				<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 					<Container>
@@ -109,14 +109,21 @@ function AdminDash() {
 								</Nav.Link>
 							</Nav>
 							<Nav>
-								<Nav.Link href="#deets">More deets</Nav.Link>
-								<Nav.Link eventKey={2} href="#memes">
-									Dank memes
+								<Nav.Link
+									onClick={
+										!showForm
+											? () => setShowForm(true)
+											: () => setShowForm(false)
+									}
+									href="#article-form"
+								>
+									Write Article
 								</Nav.Link>
 							</Nav>
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
+				{showForm && <ArticleForm />}
 				<div className="admin articles">{articlesHTML}</div>
 			</div>
 		</>

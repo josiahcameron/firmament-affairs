@@ -169,10 +169,6 @@ MEDIA_URL = '/media/'
 # implemented so different domains to access the same database
 SITE_ID = 1
 
-# Email Backend; By default DRF will try to email new users upon registration, this stops it
-# https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-EMAIL_BACKEND
-# 'django.core.mail.backends.console.EmailBackend'
-
 # Static file directories
 # https://docs.djangoproject.com/en/4.1/ref/settings/#staticfiles-dirs
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static/build/static'),)
