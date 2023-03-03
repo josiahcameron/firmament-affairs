@@ -79,7 +79,7 @@ function SubmittedDrafts({ article, updateArticle }) {
 	};
 
 	let adminButtonHTML;
-	if (article.phase === "draft") {
+	if (article.phase === "submitted") {
 		adminButtonHTML = (
 			<>
 				<Button onClick={denyDraft} variant="danger" size="md">
