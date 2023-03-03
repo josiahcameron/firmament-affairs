@@ -2,7 +2,9 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
+from rest_framework import permissions
 from rest_framework.decorators import api_view
+
 
 from . import models
 from .serializers import ArticleSerializer
@@ -26,6 +28,7 @@ class ArticleAPIView(generics.ListAPIView):
 
 class HomePageAPIView(generics.ListAPIView):
     serializer_class = ArticleSerializer
+    permission_classes = []
 
     def get_queryset(self):
         queryset = models.Article.objects.filter(phase='published')

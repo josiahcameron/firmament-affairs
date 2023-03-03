@@ -75,7 +75,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES':[
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         #  for token-based implementation in react
         'rest_framework.authentication.TokenAuthentication',
         # keep for the browserable api
@@ -158,11 +158,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Substituting a custom user model
 # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#auth-custom-user
-AUTH_USER_MODEL =  'accounts.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Managing files
-MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
-MEDIA_URL ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Site ID
 # https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-SITE_ID
@@ -171,7 +171,7 @@ SITE_ID = 1
 
 # Email Backend; By default DRF will try to email new users upon registration, this stops it
 # https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-EMAIL_BACKEND
-'django.core.mail.backends.console.EmailBackend',
+# 'django.core.mail.backends.console.EmailBackend'
 
 # Static file directories
 # https://docs.djangoproject.com/en/4.1/ref/settings/#staticfiles-dirs

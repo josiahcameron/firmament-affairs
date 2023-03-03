@@ -3,10 +3,10 @@ from django.conf import settings
 
 
 class Article(models.Model):
-    MICROCOSM = 'MC'
-    QUOTE_OF_THE_DAY = 'QOTD'
-    INTER_DIMENSIONAL = 'I_D'
-    QUASI_DIMENSIONAL = 'Q_D'
+    MICROCOSM = 'Microcosm'
+    QUOTE_OF_THE_DAY = 'Quote of the Day'
+    INTER_DIMENSIONAL = 'Inter-dimensional'
+    QUASI_DIMENSIONAL = 'Quasi-dimensional'
     CATEGORY_CHOICES = [
         (MICROCOSM, 'Microcosm'),
         (QUOTE_OF_THE_DAY, 'Quote of the Day'),

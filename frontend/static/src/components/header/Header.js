@@ -1,22 +1,39 @@
 import { NavLink } from "react-router-dom";
 
-function Header() {
+function Header({ handleLogout }) {
 	return (
-		<nav>
-			<button>
-				<NavLink to="/register">Register</NavLink>
+		<nav class="top-nav">
+			<button type="button" class="btn btn-primary top-button">
+				<NavLink class="nav-text" to="/register">
+					Register
+				</NavLink>
 			</button>
-			<button>
-				<NavLink to="/login">Login</NavLink>
+			<button type="button" class="btn btn-primary top-button">
+				<NavLink class="nav-text" to="/login">
+					Login
+				</NavLink>
 			</button>
-			<button>
-				<NavLink to="/drafts">Drafts</NavLink>
+			<button type="button" class="btn btn-primary top-button">
+				<NavLink class="nav-text" to="/drafts">
+					Drafts
+				</NavLink>
 			</button>
-			<button>
-				<NavLink to="/home">Home</NavLink>
+			<button type="button" class="btn btn-primary top-button">
+				<NavLink class="nav-text" to="/home">
+					Home
+				</NavLink>
 			</button>
-			<button>
-				<NavLink to="/admin">Admin</NavLink>
+			<button type="button" class="btn btn-primary top-button">
+				<NavLink class="nav-text" to="/admin">
+					Admin
+				</NavLink>
+			</button>
+			<button
+				onClick={handleLogout}
+				type="button"
+				className="btn btn-danger logout"
+			>
+				Logout
 			</button>
 		</nav>
 	);

@@ -14,21 +14,23 @@ import AdminDash from "./components/admin/AdminDash";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<React.StrictMode>
-		<Router>
-			<Routes>
-				{/*  */}
-				<Route path="/" element={<App />}>
-					{/* Nesting router */}
-					<Route path="home" element={<HomePage />} />
-					<Route path="login" element={<LoginForm />} />
-					<Route path="register" element={<RegistrationForm />} />
-					<Route path="drafts" element={<ArticleDrafts />} />
-					<Route path="admin" element={<AdminDash />} />
-				</Route>
-			</Routes>
-		</Router>
-	</React.StrictMode>
+	<div className="all-content-wrapper">
+		<React.StrictMode>
+			<Router>
+				<Routes>
+					{/*  */}
+					<Route path="/" element={<App />}>
+						{/* Nesting router */}
+						<Route path="home" element={<HomePage />} />
+						<Route path="login" element={<LoginForm />} />
+						<Route path="register" element={<RegistrationForm />} />
+						<Route path="drafts" element={<ArticleDrafts />} />
+						<Route path="admin" element={<AdminDash />} />
+					</Route>
+				</Routes>
+			</Router>
+		</React.StrictMode>
+	</div>
 );
 
 // If you want to start measuring performance in your app, pass a function

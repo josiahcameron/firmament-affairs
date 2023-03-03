@@ -25,7 +25,6 @@ function HomePage() {
 			}
 
 			const data = await response.json();
-
 			setArticles(data);
 		};
 
@@ -37,12 +36,12 @@ function HomePage() {
 	}
 
 	const articlesHTML = articles.map((article) => (
-		<Col key={article.id} className="container">
+		<Col key={article.id}>
 			<div className="post-container">
-				<Card className="bg-dark text-white single-post">
-					<Card.Img src={article.image} alt="post-image" />
+				<Card className="bg-dark text-white single-post h-100 w-80 mt-5">
+					{/* <Card.Img src={article.image} alt="post-image" /> */}
 					<Card.ImgOverlay>
-						<a className="article-category">{article.category}</a>
+						<h4 className="article-category">{article.category}</h4>
 						<Card.Title>{article.title}</Card.Title>
 						<Card.Text>{article.text}</Card.Text>
 						<div className="post-info flexbox">
@@ -55,18 +54,25 @@ function HomePage() {
 	));
 
 	return (
-		<div className="container">
+		<div className="wrapper">
 			<header id="header" className="header">
 				<div className="header-wrapper">
-					<Navbar className="navbar" sticky="top" expand="lg">
+					<Navbar
+						bg="dark"
+						variant="dark"
+						className="navbar"
+						sticky="top"
+						expand="lg"
+					>
 						<Container>
-							<Navbar.Brand href="#home">Categories</Navbar.Brand>
+							<Navbar.Brand>Categories</Navbar.Brand>
 							<Navbar.Toggle aria-controls="basic-navbar-nav" />
 							<Navbar.Collapse id="basic-navbar-nav">
 								<Nav className="me-auto">
-									<ul className="navbar-nav text-upper">
+									<ul className="navbar-nav text-upper category-options">
 										<li>
 											<Nav.Link
+												className="category-link"
 												href="#home"
 												onClick={() => setFilter("")}
 											>
@@ -75,10 +81,22 @@ function HomePage() {
 										</li>
 										<li>
 											<Nav.Link
+												className="category-link"
+												href="#home"
+												onClick={() =>
+													setFilter("Microcosm")
+												}
+											>
+												Microcosm
+											</Nav.Link>
+										</li>
+										<li>
+											<Nav.Link
+												className="category-link"
 												href="#home"
 												onClick={() =>
 													setFilter(
-														"inter-dimensional"
+														"Inter-dimensional"
 													)
 												}
 											>
@@ -87,9 +105,12 @@ function HomePage() {
 										</li>
 										<li>
 											<Nav.Link
+												className="category-link"
 												href="#qotd"
 												onClick={() =>
-													setFilter("qotd")
+													setFilter(
+														"Quote of the Day"
+													)
 												}
 											>
 												Quotes of the Day
@@ -97,10 +118,11 @@ function HomePage() {
 										</li>
 										<li>
 											<Nav.Link
+												className="category-link"
 												href="#home"
 												onClick={() =>
 													setFilter(
-														"quasi-dimensional"
+														"Quasi-dimensional"
 													)
 												}
 											>
@@ -114,9 +136,9 @@ function HomePage() {
 					</Navbar>
 				</div>
 			</header>
-			<Container className="content-container">
-				<Row>{articlesHTML} </Row>
-			</Container>
+			<div className="article-container">
+				<Col>{articlesHTML} </Col>
+			</div>
 		</div>
 	);
 }

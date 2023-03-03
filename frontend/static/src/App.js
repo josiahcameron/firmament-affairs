@@ -61,14 +61,7 @@ function App() {
 	return (
 		<>
 			<header>
-				<Header isAuth={isAuth} />
-				<button
-					onClick={handleLogout}
-					type="button"
-					className="btn btn-danger logout"
-				>
-					Logout
-				</button>
+				<Header isAuth={isAuth} handleLogout={handleLogout} />
 			</header>
 			<Outlet context={[setAuth]} />
 		</>
