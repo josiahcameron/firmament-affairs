@@ -67,7 +67,7 @@ function Article({ article, handleDelete, updateArticle }) {
 							<p>Date Created: {article.created_at}</p>
 							<p>Author: {article.author_username}</p>
 							<p>Category: {article.category}</p>
-							{article.phase == "draft" && (
+							{article.phase === "draft" && (
 								<div className="draft-options">
 									{editMode ? (
 										<button

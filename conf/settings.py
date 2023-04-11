@@ -27,7 +27,10 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'firmament-affairs.herokuapp.com',
+]
 
 
 # Application definition
@@ -163,6 +166,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # Managing files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Site ID
 # https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-SITE_ID

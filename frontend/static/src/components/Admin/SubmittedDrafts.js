@@ -34,7 +34,7 @@ function SubmittedDrafts({ article, updateArticle }) {
 		const updatedArticle = { ...article };
 		updatedArticle.phase = "archived";
 
-		if (updatedArticle.image != File) {
+		if (updatedArticle.image !== File) {
 			delete updatedArticle.image;
 		}
 
